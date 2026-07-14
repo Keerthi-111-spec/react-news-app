@@ -5,29 +5,31 @@ function NewsApp() {
   const [loading, setLoading] = useState(false);
 
   const getNews = () => {
-    setLoading(true);
+  setLoading(true);
 
-    fetch(
-      "https://gnews.io/api/v4/top-headlines?category=general&lang=en&country=in&max=10&apikey=aac719d3f85bbdd6954465ff45f63170"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+  const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
 
-        if (data.articles) {
-          setNews(data.articles);
-        } else {
-          console.log("API Error:", data);
-          setNews([]);
-        }
+  fetch(
+    `https://gnews.io/api/v4/top-headlines?category=general&lang=en&country=in&max=10&apikey=${API_KEY}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
 
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  };
+      if (data.articles) {
+        setNews(data.articles);
+      } else {
+        console.log("API Error:", data);
+        setNews([]);
+      }
+
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+    });
+};
 
   const styles = {
     container: {
